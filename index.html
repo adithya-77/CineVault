@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineVault — Movie & TV Database</title>
+  <meta name="description" content="Browse movies, TV shows, cast & crew. Search IMDb data and copy formatted YouTube descriptions." />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#/" class="logo" id="logo">
+        <span class="logo-icon">▶</span>
+        <span class="logo-text">Cine<span class="logo-accent">Vault</span></span>
+      </a>
+      <div class="search-container" id="searchContainer">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search movies, TV shows..." autocomplete="off" />
+          <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+        </div>
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <nav class="nav-links">
+        <a href="#/" class="nav-link" id="navHome">Home</a>
+        <a href="#/browse" class="nav-link" id="navBrowse">Browse</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main" id="mainContent">
+    <!-- Content rendered by JS -->
+  </main>
+
+  <!-- Movie Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
