@@ -1,6 +1,7 @@
 import {
   searchTitles, listTitles, getTitle,
   getTitleCredits, getTitleCertificates, getTitleBoxOffice,
+  saveMovieToSupabase,
 } from './api.js';
 import {
   renderHomePage, renderMovieGrid, renderMovieDetail,
@@ -139,7 +140,7 @@ async function loadBrowseResults(append = false) {
         tempDiv.innerHTML = (data.titles || []).map(t => renderMovieCard(t)).join('');
         while (tempDiv.firstChild) {
           grid.querySelector('.movie-grid')?.appendChild(tempDiv.firstChild) ||
-          grid.appendChild(tempDiv.firstChild);
+            grid.appendChild(tempDiv.firstChild);
         }
       } else {
         grid.innerHTML = renderMovieGrid(data.titles || [], 'browseGridInner');
@@ -197,6 +198,42 @@ async function showMovieDetail(titleId) {
           }, 2000);
         } catch {
           showToast('Failed to copy. Try manually.');
+        }
+      });
+    }
+
+    // Supabase Save logic
+    const supabaseSaveBtn = document.getElementById('supabaseSaveBtn');
+    const movieYoutubeUrl = document.getElementById('movieYoutubeUrl');
+    if (supabaseSaveBtn && movieYoutubeUrl) {
+      supabaseSaveBtn.addEventListener('click', async () => {
+        const youtubeUrl = movieYoutubeUrl.value.trim();
+        if (!youtubeUrl) {
+          showToast('Please enter a YouTube URL');
+          return;
+        }
+
+        supabaseSaveBtn.disabled = true;
+        supabaseSaveBtn.textContent = 'Saving...';
+
+        try {
+          // Collect data for Supabase
+          const payload = {
+            imdb_id: title.id,
+            name: title.primaryTitle,
+            youtube_url: youtubeUrl,
+            genres: JSON.stringify((title.genres || []).slice(0, 2)) // Only first two genres as requested
+          };
+
+          await saveMovieToSupabase(payload);
+          showToast('✅ Saved to database!');
+          movieYoutubeUrl.value = '';
+        } catch (err) {
+          console.error(err);
+          showToast('❌ Failed to save. Check console.');
+        } finally {
+          supabaseSaveBtn.disabled = false;
+          supabaseSaveBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save to Database`;
         }
       });
     }

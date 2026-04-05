@@ -128,7 +128,7 @@ export function renderMovieDetail(title, credits, certificates, boxOffice) {
           </div>
           <h1 class="detail-title">${title.primaryTitle}</h1>
           ${title.originalTitle && title.originalTitle !== title.primaryTitle
-            ? `<p class="detail-original-title">Original: ${title.originalTitle}</p>` : ''}
+      ? `<p class="detail-original-title">Original: ${title.originalTitle}</p>` : ''}
           <div class="detail-genres">
             ${(title.genres || []).map(g => `<span class="genre-tag">${g}</span>`).join('')}
           </div>
@@ -157,6 +157,20 @@ export function renderMovieDetail(title, credits, certificates, boxOffice) {
         </div>
       </section>
     ` : ''}
+
+    <section class="detail-section">
+      <h2 class="section-heading">💾 Save to Database</h2>
+      <div class="supabase-box">
+        <div class="supabase-input-group">
+          <input type="url" id="movieYoutubeUrl" class="supabase-input" placeholder="Enter YouTube URL (e.g., https://www.youtube.com/watch?v=...)" />
+          <button id="supabaseSaveBtn" class="supabase-save-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save to Database
+          </button>
+        </div>
+        <p class="supabase-hint">This will save the movie details along with the YouTube URL to the central database.</p>
+      </div>
+    </section>
 
     <section class="detail-section">
       <h2 class="section-heading">📋 YouTube Description</h2>
